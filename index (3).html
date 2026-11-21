@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AnlıkÇeviri - Ekrandaki İngilizce Yazıyı Anında Türkçeye Çevir</title>
+<meta name="description" content="AnlıkÇeviri ile ekranındaki İngilizce yazıları (oyun, web sayfası, belge) canlı olarak Türkçeye çevir. Ücretsiz, kurulum yok, görüntüler tarayıcından çıkmaz.">
+<meta name="keywords" content="anlıkçeviri, anlık çeviri, ekran çevirisi, canlı çeviri, OCR, İngilizce Türkçe çeviri, oyun çeviri, AnlıkÇeviri">
+<link rel="canonical" href="https://demet-star.github.io/anlikceviri/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AnlıkÇeviri - Ekran Çevirisi">
+<meta property="og:description" content="Ekrandaki İngilizce yazıyı canlı olarak Türkçeye çevir. Ücretsiz, kurulum yok.">
+<meta property="og:image" content="https://demet-star.github.io/anlikceviri/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://demet-star.github.io/anlikceviri/og-cover.png">
+<meta property="og:url" content="https://demet-star.github.io/anlikceviri/">
+<meta name="theme-color" content="#171923">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"AnlıkÇeviri","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","inLanguage":"tr","offers":{"@type":"Offer","price":"0","priceCurrency":"TRY"},"description":"Ekrandaki İngilizce yazıları canlı olarak Türkçeye çeviren ücretsiz web uygulaması."}
+</script>
+<style>
+:root{--bg:#171923;--card:#1f2333;--txt:#e5e7eb;--mavi:#0284c7;--acik:#7dd3fc;--yesil:#86efac;--soluk:#9ca3af}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:"Segoe UI",system-ui,sans-serif;line-height:1.55}
+header,main,footer{max-width:920px;margin:0 auto;padding:0 16px}
+header{padding-top:28px;text-align:center}
+.logo{display:block;margin:0 auto 10px;border-radius:22px;filter:drop-shadow(0 10px 22px rgba(14,165,233,.35))}
+h1{font-size:2.8rem;font-weight:800;letter-spacing:-1.5px;margin:0;line-height:1.1}
+h1 span{background:linear-gradient(90deg,#67e8f9,#a78bfa 60%,#fb923c);-webkit-background-clip:text;background-clip:text;color:transparent}
+body{background-image:radial-gradient(700px 380px at 85% -5%,rgba(124,58,237,.22),transparent 60%),radial-gradient(600px 360px at 0% 0%,rgba(14,165,233,.16),transparent 60%);background-repeat:no-repeat}
+.slogan{margin:6px 0 0;color:var(--soluk)}
+.bar{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:22px 0 10px}
+button,label.btn{background:var(--mavi);color:#fff;border:0;border-radius:8px;padding:11px 20px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit}
+button:hover,label.btn:hover{filter:brightness(1.1)}button:disabled{opacity:.5;cursor:default}
+button.ikincil,label.btn.ikincil{background:#334155}
+button.durdur{background:#b91c1c}
+input[type=file]{display:none}
+.ayar{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;font-size:14px;color:var(--soluk)}
+.ayar input{width:62px;background:#fff;border:0;border-radius:4px;padding:3px 6px}
+.kutu{background:var(--card);border-radius:12px;padding:14px 16px;margin:14px 0}
+.kutu h2{margin:0 0 8px;font-size:14px;color:#93c5fd;font-weight:600}
+.kutu.tr h2{color:var(--yesil)}
+.kutu pre{white-space:pre-wrap;margin:0;font-family:inherit;min-height:70px;font-size:16px}
+#durum{text-align:center;color:var(--soluk);min-height:1.6em;margin:8px 0}
+#uyari{display:none;background:#451a03;color:#fed7aa;border-radius:8px;padding:10px 14px;margin:12px 0;font-size:14px}
+section.bilgi{margin:36px 0}
+section.bilgi h2{color:var(--acik);font-size:1.25rem}
+section.bilgi li,section.bilgi p{color:#cbd5e1}
+details{background:var(--card);border-radius:8px;padding:10px 14px;margin:8px 0}
+summary{cursor:pointer;font-weight:600}
+
+.mini-btn{background:#334155;border:0;color:#fff;border-radius:6px;padding:4px 9px;font-size:13px;cursor:pointer;font-family:inherit}
+#kare{display:none;background:#0f172a;border:1px solid #334155;border-radius:14px;color:#e5e7eb;flex-direction:column;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.5);font-family:"Segoe UI",system-ui,sans-serif}
+#kare.acik{display:flex;position:fixed;right:12px;bottom:12px;width:min(300px,78vw);height:min(300px,78vw);z-index:50}
+#kare.pip{display:flex;position:static;width:100%;height:100vh;border-radius:0;border:0}
+#kare .ust{display:flex;gap:6px;align-items:center;padding:6px 8px;background:#1e293b;flex:0 0 auto}
+#kare .ust b{flex:1;font-size:13px;color:#7dd3fc}
+#kare .govde{flex:1;overflow:auto;padding:10px 12px}
+#kare .govde p{margin:0 0 .7em;white-space:pre-wrap}
+#kareEn{color:#94a3b8;font-size:.85em;border-top:1px dashed #334155;padding-top:8px;display:none}
+#kare .alt{padding:4px 10px;font-size:12px;color:#94a3b8;background:#1e293b;flex:0 0 auto}
+.telefon-notu{display:none;background:#0c4a6e;color:#e0f2fe;border-radius:8px;padding:10px 14px;margin:12px 0;font-size:14px}
+@media (max-width:700px){h1{font-size:1.8rem}.bar button,.bar label.btn{flex:1 1 100%;text-align:center}}
+footer{text-align:center;color:var(--soluk);font-size:14px;padding:24px 16px 40px}
+footer a{color:var(--acik)}
+</style>
+</head>
+<body>
+<header>
+  <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMGIxMDIwIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMjYyMDZiIi8+PC9saW5lYXJHcmFkaWVudD4KICAgIDxyYWRpYWxHcmFkaWVudCBpZD0iZ2xvdyIgY3g9IjAuODUiIGN5PSIwLjkiIHI9IjAuNyI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMjJkM2VlIiBzdG9wLW9wYWNpdHk9Ii40NSIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzIyZDNlZSIgc3RvcC1vcGFjaXR5PSIwIi8+PC9yYWRpYWxHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYjEiIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiM2N2U4ZjkiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMwZWE1ZTkiLz48L2xpbmVhckdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJiMiIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2ZlZjNjNyIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2ZiOTIzYyIvPjwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiByeD0iMTEyIiBmaWxsPSJ1cmwoI2JnKSIvPgogIDxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiByeD0iMTEyIiBmaWxsPSJ1cmwoI2dsb3cpIi8+CiAgPGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMzhiZGY4IiBzdHJva2Utd2lkdGg9IjE0IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIG9wYWNpdHk9Ii45Ij4KICAgIDxwYXRoIGQ9Ik05MiAxNTBWMTA0YTEyIDEyIDAgMCAxIDEyLTEyaDQ2Ii8+PHBhdGggZD0iTTQyMCAxNTBWMTA0YTEyIDEyIDAgMCAwLTEyLTEyaC00NiIvPgogICAgPHBhdGggZD0iTTkyIDM2MnY0NmExMiAxMiAwIDAgMCAxMiAxMmg0NiIvPjxwYXRoIGQ9Ik00MjAgMzYydjQ2YTEyIDEyIDAgMCAxLTEyIDEyaC00NiIvPgogIDwvZz4KICA8cGF0aCBkPSJNMTYwIDEzMGgxMjBhNDAgNDAgMCAwIDEgNDAgNDB2NjBhNDAgNDAgMCAwIDEtNDAgNDBoLTcwbC00MCAzOHYtMzhoLTEwYTQwIDQwIDAgMCAxLTQwLTQwdi02MGE0MCA0MCAwIDAgMSA0MC00MHoiIGZpbGw9InVybCgjYjEpIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTIgLTQpIi8+CiAgPHBhdGggZD0iTTIzMiAyMzRoMTQwYTQwIDQwIDAgMCAxIDQwIDQwdjUwYTQwIDQwIDAgMCAxLTQwIDQwaC04djQwbC00NC00MGgtODhhNDAgNDAgMCAwIDEtNDAtNDB2LTUwYTQwIDQwIDAgMCAxIDQwLTQweiIgZmlsbD0idXJsKCNiMikiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xNCAtMTApIi8+CiAgPGcgZm9udC1mYW1pbHk9IkludGVyLFNlZ29lIFVJLEFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiMwYjEwMjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPgogICAgPHRleHQgeD0iMTg4IiB5PSIyMzgiIGZvbnQtc2l6ZT0iMTEyIj5BPC90ZXh0PgogICAgPHRleHQgeD0iMjc4IiB5PSIzNDIiIGZvbnQtc2l6ZT0iMTEyIj7DhzwvdGV4dD4KICA8L2c+Cjwvc3ZnPgo=" width="84" height="84" alt="AnlıkÇeviri logosu">
+  <h1>Anlık<span>Çeviri</span></h1>
+  <p class="slogan">Ekrandaki İngilizce yazıları canlı olarak Türkçeye çevir</p>
+</header>
+<main>
+  <div id="uyari"></div>
+  <div class="telefon-notu" id="telNot"><b>Telefondan mı giriyorsun?</b> Tarayıcılar telefonda başka uygulamanın ekranını canlı okuyamaz. Ekran görüntüsü alıp <b>Ekran Görüntüsü Çevir</b> ile yükle ya da siteyi ana ekrana ekleyip görüntüyü galeriden <b>Paylaş → AnlıkÇeviri</b> diyerek gönder.</div>
+  <div class="bar">
+    <button id="canli">Canlı Çeviriyi Başlat</button>
+    <button id="tek" class="ikincil">Tek Seferlik Çevir</button>
+    <button id="kucukBtn" class="ikincil">Küçük Kare Aç</button>
+    <label class="btn ikincil">Ekran Görüntüsü Çevir<input type="file" id="dosya" accept="image/*"></label>
+  </div>
+  <div class="ayar">
+    <label>Üstten yok say (%) <input type="number" id="ust" value="12" min="0" max="50"></label>
+    <label>Alttan yok say (%) <input type="number" id="alt" value="6" min="0" max="50"></label>
+  </div>
+  <div class="kutu"><h2>Algılanan İngilizce metin</h2><pre id="en"></pre></div>
+  <div class="kutu tr"><h2>Türkçe çeviri</h2><pre id="tr"></pre></div>
+  <div id="durum">Hazır</div>
+
+  <section class="bilgi">
+    <h2>Nasıl kullanılır?</h2>
+    <p>Pratik yol: <b>Win + Shift + S</b> ile ekranın bir bölümünü seç, sonra bu sayfada <b>Ctrl + V</b> bas. Resim dosyalarını sayfaya sürükleyip bırakabilirsin.</p>
+    <ol>
+      <li><b>Canlı Çeviriyi Başlat</b> düğmesine bas.</li>
+      <li>Açılan pencerede <b>Pencere</b> ya da <b>Tüm ekran</b> sekmesinden çevirmek istediğin İngilizce sayfayı (veya oyunu) seç.</li>
+      <li>Sayfayı kaydır. Kaydırmayı bırakınca birkaç saniye içinde metin okunur ve Türkçeye çevrilir.</li>
+    </ol>
+    <p>İpucu: AnlıkÇeviri'yu ayrı bir pencerede, çevirmek istediğin pencerenin yanına koy. Tarayıcı çubuğunu ve görev çubuğunu okumamak için yukarıdaki yüzde ayarlarını kullanabilirsin.</p>
+  </section>
+
+  <section class="bilgi">
+    <h2>Sık sorulan sorular</h2>
+    <details><summary>Ücretsiz mi?</summary><p>Evet. Kayıt, kurulum ya da ücret yok.</p></details>
+    <details><summary>Ekran görüntülerim bir yere gönderiliyor mu?</summary><p>Hayır. Yazı okuma (OCR) tarayıcının içinde yapılır, görüntüler hiçbir sunucuya yüklenmez. Ayrıntılar için <a href="gizlilik.html" style="color:#7dd3fc">gizlilik sayfasına</a> bak.</p></details>
+    <details><summary>Hangi tarayıcılarda çalışır?</summary><p>Masaüstünde güncel Chrome ve Edge önerilir. Çeviri, Chrome'un yerleşik çeviri özelliğini kullanır. Bu özellik yoksa ücretsiz bir çeviri servisi devreye girer (günlük sınırı vardır). Ekran paylaşımı telefonlarda çalışmayabilir.</p></details>
+    <details><summary>Küçük kare ne işe yarar?</summary><p>Masaüstünde Chrome/Edge'de <b>Küçük Kare Aç</b> dediğinde çeviri, diğer pencerelerin üstünde duran küçük bir kareye taşınır. Oyunu ya da sayfayı büyük bırakıp çeviriyi köşede okursun. Yazı boyutunu A− / A+ ile ayarlarsın. Bu özellik yoksa kare sayfanın sağ alt köşesinde durur.</p></details>
+    <details><summary>Telefonda canlı çalışır mı?</summary><p>Hayır. Telefon tarayıcıları başka uygulamanın ekranını canlı paylaşamaz ve başka uygulamanın üstünde pencere gösteremez. Bunun için ekran görüntüsü alıp yükle ya da siteyi ana ekrana ekleyip görüntüyü galeriden Paylaş → AnlıkÇeviri ile gönder.</p></details>
+    <details><summary>Neden bazı kelimeler hatalı çıkıyor?</summary><p>Yazı okuma, küçük ve düşük kontrastlı yazılarda hata yapabilir. Sayfayı yakınlaştırmak (Ctrl +) sonucu belirgin şekilde iyileştirir.</p></details>
+  </section>
+</main>
+
+<div id="kare" aria-label="AnlıkÇeviri küçük çeviri karesi">
+  <div class="ust"><b>AnlıkÇeviri · TR</b>
+    <button class="mini-btn" id="kAz">A−</button><button class="mini-btn" id="kCok">A+</button>
+    <button class="mini-btn" id="kEn">EN</button><button class="mini-btn" id="kDur">■</button><button class="mini-btn" id="kKapat">✕</button></div>
+  <div class="govde"><p id="kareTr">Henüz çeviri yok.</p><p id="kareEn"></p></div>
+  <div class="alt" id="kareDurum">Hazır</div>
+</div>
+<footer>
+  AnlıkÇeviri · <a href="gizlilik.html">Gizlilik</a>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const durum = t => { $("durum").textContent = t; const k = $("kareDurum"); if (k) k.textContent = t; };
+function yaz(en, tr) {
+  $("en").textContent = en; $("tr").textContent = tr;
+  $("kareTr").textContent = tr || "Çevrilecek metin bekleniyor..."; $("kareEn").textContent = en;
+}
+const URL_RE = /(https?:\/\/|www\.|\.com|\.org|\.net|\.app|\.io|\/\?|_source=|campaignid)/i;
+
+let worker = null, translator = null, mesgul = false, canliAkis = null;
+
+/* ---------- OCR ---------- */
+async function workerHazir() {
+  if (worker) return worker;
+  durum("Okuma motoru yükleniyor (ilk seferde birkaç saniye)...");
+  worker = await Tesseract.createWorker("eng");
+  await worker.setParameters({ tessedit_pageseg_mode: "3" });
+  return worker;
+}
+
+function hazirlaTuval(kaynak, w, h) {
+  const ust = Math.min(50, +$("ust").value || 0), alt = Math.min(50, +$("alt").value || 0);
+  const y0 = Math.round(h * ust / 100), y1 = Math.round(h * (100 - alt) / 100), hh = Math.max(1, y1 - y0);
+  const olcek = w < 1600 ? 1.6 : 1;
+  const c = document.createElement("canvas");
+  c.width = Math.round(w * olcek); c.height = Math.round(hh * olcek);
+  const x = c.getContext("2d", { willReadFrequently: true });
+  // koyu zemin mi? küçük örnekle ölç
+  const k = document.createElement("canvas"); k.width = 48; k.height = 27;
+  const kx = k.getContext("2d", { willReadFrequently: true });
+  kx.drawImage(kaynak, 0, y0, w, hh, 0, 0, 48, 27);
+  const d = kx.getImageData(0, 0, 48, 27).data; let t = 0;
+  for (let i = 0; i < d.length; i += 4) t += (d[i] + d[i+1] + d[i+2]) / 3;
+  const koyu = t / (d.length / 4) < 128;
+  x.filter = koyu ? "grayscale(1) invert(1)" : "grayscale(1)";
+  x.drawImage(kaynak, 0, y0, w, hh, 0, 0, c.width, c.height);
+  return c;
+}
+
+function satirTemiz(metin, guven) {
+  metin = (metin || "").trim();
+  if (metin.length < 3 || guven < 55) return false;
+  if (/[çğıöşüÇĞİÖŞÜ]/.test(metin)) return false;   // Türkçe çeviri karesini tekrar okumasın
+  if (URL_RE.test(metin)) return false;
+  const harf = (metin.match(/\p{L}/gu) || []).length;
+  if (harf / metin.length < 0.6) return false;
+  const kel = metin.split(/\s+/);
+  if (kel.length >= 3 && kel.filter(k => k.length <= 2).length / kel.length > 0.6) return false;
+  return true;
+}
+
+async function oku(kaynak, w, h) {
+  const wk = await workerHazir();
+  durum("Yazı okunuyor...");
+  const { data } = await wk.recognize(hazirlaTuval(kaynak, w, h));
+  const paragraflar = [];
+  const kaynakPar = data.paragraphs && data.paragraphs.length ? data.paragraphs
+    : [{ lines: data.lines || [] }];
+  for (const p of kaynakPar) {
+    const sat = (p.lines || []).filter(l => satirTemiz(l.text, l.confidence)).map(l => l.text.trim());
+    if (sat.length) paragraflar.push(sat.join(" "));
+  }
+  return paragraflar;
+}
+
+/* ---------- Çeviri ---------- */
+const onbellek = new Map();
+async function ceviriMotoru() {
+  if (translator !== null) return translator;
+  translator = false;
+  try {
+    if ("Translator" in self) {
+      const a = await Promise.race([Translator.availability({ sourceLanguage: "en", targetLanguage: "tr" }), new Promise(r => setTimeout(() => r("unavailable"), 3000))]);
+      if (a !== "unavailable") {
+        translator = await Translator.create({
+          sourceLanguage: "en", targetLanguage: "tr",
+          monitor(m) { m.addEventListener("downloadprogress", e => durum("Çeviri modeli iniyor: %" + Math.round(e.loaded * 100))); }
+        });
+      }
+    }
+  } catch (e) { translator = false; }
+  return translator;
+}
+
+async function yedekCeviri(metin) {
+  const parcalar = metin.match(/[^.!?]+[.!?]*\s*/g) || [metin];
+  const paketler = []; let cur = "";
+  for (const p of parcalar) {
+    if ((cur + p).length > 450) { if (cur) paketler.push(cur); cur = p; } else cur += p;
+  }
+  if (cur) paketler.push(cur);
+  const sonuc = [];
+  for (const q of paketler) {
+    const r = await fetch("https://api.mymemory.translated.net/get?langpair=en|tr&q=" + encodeURIComponent(q));
+    const j = await r.json();
+    if (!j.responseData || j.responseStatus == 429) throw new Error("Ücretsiz çeviri servisinin günlük sınırı doldu. Chrome'un güncel sürümünü kullanmayı dene.");
+    sonuc.push(j.responseData.translatedText);
+  }
+  return sonuc.join(" ");
+}
+
+async function cevir(p) {
+  if (onbellek.has(p)) return onbellek.get(p);
+  const tr = await ceviriMotoru();
+  const s = tr ? await tr.translate(p) : await yedekCeviri(p);
+  if (onbellek.size > 400) onbellek.clear();
+  onbellek.set(p, s);
+  return s;
+}
+
+
+/* ---------- İsteğe bağlı: bilgisayardaki Python sunucusu (Tesseract) ---------- */
+let sunucuVar = false;
+fetch("api/cevir", { method: "GET" }).then(r => { sunucuVar = (r.status === 405); }).catch(() => {});
+async function sunucuIsle(kaynak, w, h) {
+  const c = document.createElement("canvas"); c.width = w; c.height = h;
+  c.getContext("2d").drawImage(kaynak, 0, 0, w, h);
+  const blob = await new Promise(r => c.toBlob(r, "image/png"));
+  const f = new FormData(); f.append("resim", blob, "ekran.png");
+  f.append("ust_yok", $("ust").value); f.append("alt_yok", $("alt").value);
+  const r = await fetch("api/cevir", { method: "POST", body: f });
+  if (!r.ok) throw new Error("sunucu " + r.status);
+  return r.json();
+}
+
+/* ---------- Akış ---------- */
+async function isle(kaynak, w, h) {
+  if (mesgul) return;
+  mesgul = true;
+  try {
+    if (sunucuVar) {
+      try {
+        durum("Okunuyor ve çevriliyor (bilgisayardaki Tesseract)...");
+        const j = await sunucuIsle(kaynak, w, h);
+        if (!j.orijinal) { yaz("", ""); durum((canliAkis ? "CANLI · " : "") + (j.mesaj || "Okunabilir metin bulunamadı.")); mesgul = false; return; }
+        yaz(j.orijinal, j.ceviri);
+        durum((canliAkis ? "CANLI · " : "") + (j.mesaj || "Çeviri tamamlandı."));
+        mesgul = false; return;
+      } catch (e) { sunucuVar = false; }   // sunucu yanıt vermezse tarayıcı OCR'ına geç
+    }
+    if (typeof Tesseract === "undefined") throw new Error("Okuma motoru yüklenemedi. İnternet bağlantını kontrol et.");
+    const par = await oku(kaynak, w, h);
+    if (!par.length) { yaz("", ""); durum((canliAkis ? "CANLI · " : "") + "Okunabilir metin bulunamadı."); mesgul = false; return; }
+    $("en").textContent = par.join("\n\n");
+    durum("Çevriliyor...");
+    const cev = [];
+    for (const p of par) cev.push(await cevir(p));
+    yaz(par.join("\n\n"), cev.join("\n\n"));
+    durum((canliAkis ? "CANLI · " : "") + "Çeviri tamamlandı.");
+  } catch (e) {
+    durum("Hata: " + (e.message || e));
+  }
+  mesgul = false;
+}
+
+/* ---------- Tek seferlik / resim ---------- */
+async function ekranYakala() {
+  const s = await navigator.mediaDevices.getDisplayMedia({ video: true });
+  const v = document.createElement("video"); v.srcObject = s; v.muted = true; await v.play();
+  await new Promise(r => setTimeout(r, 500));
+  return { s, v };
+}
+$("tek").onclick = async () => {
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia) { durum("Bu cihaz ekran paylaşımını desteklemiyor. 'Resim Yükle' seçeneğini kullan."); return; }
+  try {
+    if (!sunucuVar) await ceviriMotoru();
+    const { s, v } = await ekranYakala();
+    const c = document.createElement("canvas"); c.width = v.videoWidth; c.height = v.videoHeight;
+    c.getContext("2d").drawImage(v, 0, 0);
+    s.getTracks().forEach(t => t.stop());
+    await isle(c, c.width, c.height);
+  } catch (e) { durum("Ekran paylaşımı iptal edildi."); }
+};
+$("dosya").onchange = async e => {
+  const f = e.target.files[0]; if (!f) return;
+  const img = new Image(); img.src = URL.createObjectURL(f);
+  await img.decode(); if (!sunucuVar) await ceviriMotoru();
+  await isle(img, img.naturalWidth, img.naturalHeight);
+  e.target.value = "";
+};
+
+/* ---------- Canlı mod ---------- */
+const kucuk = document.createElement("canvas"); kucuk.width = 64; kucuk.height = 36;
+const kctx = kucuk.getContext("2d", { willReadFrequently: true });
+function parmakIzi(v) {
+  kctx.drawImage(v, 0, 0, 64, 36);
+  const d = kctx.getImageData(0, 0, 64, 36).data, g = new Uint8Array(64 * 36);
+  for (let i = 0; i < g.length; i++) g[i] = (d[i*4] + d[i*4+1] + d[i*4+2]) / 3;
+  return g;
+}
+const fark = (a, b) => { let t = 0; for (let i = 0; i < a.length; i++) t += Math.abs(a[i] - b[i]); return t / a.length; };
+
+let zamanlayici = null;
+function canliDurdur() {
+  clearInterval(zamanlayici); zamanlayici = null;
+  if (canliAkis) canliAkis.getTracks().forEach(t => t.stop());
+  canliAkis = null;
+  $("canli").textContent = "Canlı Çeviriyi Başlat"; $("canli").classList.remove("durdur");
+  durum("Canlı çeviri durduruldu.");
+}
+$("canli").onclick = async () => {
+  if (canliAkis) { canliDurdur(); return; }
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia) { durum("Bu cihaz ekran paylaşımını desteklemiyor. Masaüstünde Chrome ya da Edge kullan."); return; }
+  try {
+    if (!sunucuVar) await ceviriMotoru();            // kullanıcı tıklamasıyla model indirmeyi başlatır
+    canliAkis = await navigator.mediaDevices.getDisplayMedia({ video: true });
+  } catch (e) { canliAkis = null; durum("Ekran paylaşımı iptal edildi."); return; }
+  const v = document.createElement("video"); v.srcObject = canliAkis; v.muted = true; await v.play();
+  canliAkis.getVideoTracks()[0].onended = canliDurdur;
+  $("canli").textContent = "Canlı Çeviriyi Durdur"; $("canli").classList.add("durdur");
+  durum("CANLI · Sayfayı kaydır, durunca çevrilir.");
+  let onceki = null, bekliyor = true, durgun = 0;
+  zamanlayici = setInterval(async () => {
+    if (mesgul || !canliAkis) return;
+    const p = parmakIzi(v);
+    if (onceki && fark(p, onceki) > 3) { bekliyor = true; durgun = 0; } else durgun++;
+    onceki = p;
+    if (bekliyor && durgun >= 1) {
+      bekliyor = false;
+      const c = document.createElement("canvas"); c.width = v.videoWidth; c.height = v.videoHeight;
+      c.getContext("2d").drawImage(v, 0, 0);
+      await isle(c, c.width, c.height);
+    }
+  }, 700);
+};
+
+
+/* ---------- Küçük kare (her zaman üstte duran çeviri karesi) ---------- */
+let kareFont = 18; const kare = $("kare");
+const fontUygula = () => { $("kareTr").style.fontSize = kareFont + "px"; };
+fontUygula();
+$("kAz").onclick = () => { kareFont = Math.max(11, kareFont - 2); fontUygula(); };
+$("kCok").onclick = () => { kareFont = Math.min(40, kareFont + 2); fontUygula(); };
+$("kEn").onclick = () => { const e = $("kareEn"); e.style.display = e.style.display === "block" ? "none" : "block"; };
+$("kDur").onclick = () => { if (canliAkis) $("canli").onclick(); };
+let pipPencere = null;
+function kareKapat() {
+  if (pipPencere) { try { pipPencere.close(); } catch (e) {} pipPencere = null; }
+  kare.classList.remove("pip", "acik");
+  document.body.appendChild(kare);
+  $("kucukBtn").textContent = "Küçük Kare Aç";
+}
+$("kKapat").onclick = kareKapat;
+$("kucukBtn").onclick = async () => {
+  if (kare.classList.contains("acik") || kare.classList.contains("pip")) { kareKapat(); return; }
+  if ("documentPictureInPicture" in window) {
+    try {
+      pipPencere = await documentPictureInPicture.requestWindow({ width: 320, height: 340 });
+      [...document.styleSheets].forEach(ss => {
+        try { const s = pipPencere.document.createElement("style"); s.textContent = [...ss.cssRules].map(r => r.cssText).join("\n"); pipPencere.document.head.appendChild(s); } catch (e) {}
+      });
+      pipPencere.document.body.style.margin = "0";
+      pipPencere.document.body.style.background = "#0f172a";
+      pipPencere.document.body.appendChild(kare);
+      kare.classList.add("pip");
+      pipPencere.addEventListener("pagehide", () => { pipPencere = null; kare.classList.remove("pip"); document.body.appendChild(kare); $("kucukBtn").textContent = "Küçük Kare Aç"; });
+      $("kucukBtn").textContent = "Küçük Kareyi Kapat";
+      return;
+    } catch (e) { /* aşağıdaki sayfa içi kareye düş */ }
+  }
+  kare.classList.add("acik"); $("kucukBtn").textContent = "Küçük Kareyi Kapat";
+};
+
+
+/* ---------- Ctrl+V ile yapıştır ve sürükle-bırak ---------- */
+async function blobIsle(blob) {
+  const img = new Image(); img.src = URL.createObjectURL(blob);
+  try { await img.decode(); } catch (e) { durum("Bu dosya resim olarak açılamadı (PNG ya da JPG dene)."); return; }
+  if (!sunucuVar) await ceviriMotoru(); await isle(img, img.naturalWidth, img.naturalHeight);
+}
+document.addEventListener("paste", e => {
+  const it = [...(e.clipboardData ? e.clipboardData.items : [])].find(i => i.type.startsWith("image/"));
+  if (it) { e.preventDefault(); blobIsle(it.getAsFile()); }
+});
+["dragover", "drop"].forEach(n => document.addEventListener(n, e => {
+  e.preventDefault();
+  if (n === "drop") { const f = [...e.dataTransfer.files].find(x => x.type.startsWith("image/")); if (f) blobIsle(f); }
+}));
+
+/* ---------- Telefon / PWA ---------- */
+if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) $("telNot").style.display = "block";
+if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
+(async () => {                        // galeriden "Paylaş → AnlıkÇeviri" ile gelen görüntü
+  if (!/paylasildi/.test(location.search) || !("caches" in self)) return;
+  try {
+    const c = await caches.open("paylasim");
+    const key = new URL("paylasilan", location.href).href;
+    const r = await c.match(key); if (!r) return;
+    const blob = await r.blob(); await c.delete(key);
+    const img = new Image(); img.src = URL.createObjectURL(blob); await img.decode();
+    history.replaceState(null, "", location.pathname);
+    if (!sunucuVar) await ceviriMotoru(); await isle(img, img.naturalWidth, img.naturalHeight);
+  } catch (e) { durum("Paylaşılan görüntü okunamadı."); }
+})();
+
+if (!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia) {
+  const u = $("uyari"); u.style.display = "block";
+  u.textContent = "Bu cihaz ekran paylaşımını desteklemiyor (telefonlarda çoğunlukla yok). Masaüstünde Chrome ya da Edge kullan ya da 'Resim Yükle' ile ekran görüntüsü çevir.";
+}
+</script>
+</body>
+</html>
