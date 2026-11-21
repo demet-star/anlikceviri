@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://anlikceviri.github.io/sitemap.xml
